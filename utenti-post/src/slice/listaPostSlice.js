@@ -1,7 +1,7 @@
-import { createAsyncThunk, createReducer, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { postUrl, url, urlImmagine } from '../data/data';
-import {  useDispatch } from 'react-redux';
+import { fieldsUrlImmagine, postUrl, url, urlImmagine } from '../data/data';
+
 
 
 
@@ -38,7 +38,8 @@ export const getAllPosts = createAsyncThunk("getAllPosts/fetch", async (params, 
 
 
 export const getAllPostsImages = createAsyncThunk("getAllPostsImages/fetch", async (id) => {
-    return axios(urlImmagine + id)
+    console.log("getAllPostsImages");
+    return axios(url+ urlImmagine + id + fieldsUrlImmagine)
         .then((response) => {console.log(response.data); return response.data.guid.rendered})
 
 })
@@ -56,6 +57,7 @@ const chiamataPosts_slice = createSlice(
             builder.addCase(getAllPosts.pending, (state, action) => {
                 state.posts.loading = true;
                 state.posts.successo = false;
+                state.immagini.listaImmagini=[];
             })
                 .addCase(getAllPosts.rejected, (state, action) => {
                     state.posts.loading = false
@@ -64,14 +66,14 @@ const chiamataPosts_slice = createSlice(
                 })
                 .addCase(getAllPosts.fulfilled, (state, action) => {
                     state.posts.loading = false;
-                    state.posts.listaPost = action.payload;
-                
+                    state.posts.listaPost = action.payload;                
                     state.posts.successo = true;
                    
                 })
                 .addCase(getAllPostsImages.pending, (state, action) => {
                     state.posts.loading = true;
                     state.posts.successo = false;
+                
                 })
                 .addCase(getAllPostsImages.rejected, (state, action) => {
                     state.immagini.loading = false
@@ -80,8 +82,7 @@ const chiamataPosts_slice = createSlice(
                 })
                 .addCase(getAllPostsImages.fulfilled, (state, action) => {
                     state.immagini.loading = false;
-                    state.immagini.listaImmagini.push(action.payload);
-                  
+                    state.immagini.listaImmagini.push(action.payload);                  
                     state.immagini.successo = true;
                     
                 })

@@ -13,7 +13,7 @@ const initialState = {
 
 export const getUtenti = createAsyncThunk("GetUtenti/fetch", async () => {
     return axios(url + utentiUrl)
-        .then((response) => { console.log(response.data); return response.data })
+        .then((response) => {return response.data })
 
 })
 
@@ -35,9 +35,9 @@ const chiamataUtenti_slice = createSlice(
                 .addCase(getUtenti.fulfilled, (state, action) => {
                     state.loading = false;
                     state.utenti = action.payload;
-                    console.log(action);
+                    
                     state.successo = true;
-                    console.log(state);
+                 
                 })
         }
     }
