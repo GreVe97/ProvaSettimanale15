@@ -4,11 +4,10 @@ import { utentiUrl,url } from '../data/data';
 
 
 const initialState = {
-    utenti: {},
+    utenti: [],
     loading: null,
     error: "",
     successo: false,
-    post:[],
 };
 
 export const getUtenti = createAsyncThunk("GetUtenti/fetch", async () => {
@@ -22,8 +21,8 @@ const chiamataUtenti_slice = createSlice(
         name: 'chiamataUtenti',
         initialState: initialState,
         reducers: {},
-        extraReducers: builder => {
-            builder.addCase(getUtenti.pending, (state, action) => {
+        extraReducers: builder => { builder
+           .addCase(getUtenti.pending, (state, action) => {
                 state.loading = true;
                 state.successo = false;
             })

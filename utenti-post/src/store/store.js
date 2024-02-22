@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import chiamataUtentiReducer from '../slice/listaUtentiSlice';
 import chiamataPostsReducer from '../slice/listaPostSlice';
 import chiamataCategorieReducer from '../slice/listaCategorieSlice';
+import utenteSelezionatoReducer from "../slice/utenteSelezionatoSlice";
 import sessionStorage from "redux-persist/lib/storage/session";
 import { persistStore, persistReducer, FLUSH,
     REHYDRATE,
@@ -23,12 +24,14 @@ const rootPersistConfig = {
         },
       }),
     ],
+    whitelist: ['chiamataPosts','utenteSelezionato'],
   };
 
   const rootReducer = combineReducers({
-    chiamataUtenti: chiamataUtentiReducer,
+        chiamataUtenti: chiamataUtentiReducer,
         chiamataPosts : chiamataPostsReducer,
-        chiamataCategorie : chiamataCategorieReducer
+        chiamataCategorie : chiamataCategorieReducer,
+        utenteSelezionato: utenteSelezionatoReducer,
   });
 
   const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
@@ -41,9 +44,7 @@ const rootPersistConfig = {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  });
-  
-  
+  });  
   export const persistor = persistStore(store);
 
 

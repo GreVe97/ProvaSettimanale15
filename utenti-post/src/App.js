@@ -6,8 +6,8 @@ import HomePage from './Pagine/HomePage';
 import ListaUtentiPage from './Pagine/ListaUtentiPage';
 import NotFoundPage from './Pagine/NotFoundPage';
 import NavbarBella from './Componenti/NavbarBella';
-import CategoriePage from './Pagine/CategoriePage';
 import ArticoloPage from './Pagine/ArticoloPage'
+import UtentePage from './Pagine/UtentePage';
 function App() {
   return (
     <BrowserRouter>
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/utenti/" element={<ListaUtentiPage />} />
-        <Route path="/categorie/" element={<CategoriePage/>}/>
+        <Route path="/utente/:id" element={<UtentePage/>}/>
         <Route path="/articolo/:id" element={<ArticoloPage/>}/>
         <Route path="*" element={< NotFoundPage />} />
       </Routes>

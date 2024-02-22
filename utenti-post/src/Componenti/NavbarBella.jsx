@@ -20,7 +20,6 @@ export default function NavbarBella() {
                 navbarScroll
               >
                 <Nav.Link as={Link} to="/utenti/">Lista Utenti</Nav.Link>
-                <Nav.Link as={Link} to="/categorie/">Lista Categorie</Nav.Link>
               </Nav>
               <Form className="d-flex">
                 <Form.Control

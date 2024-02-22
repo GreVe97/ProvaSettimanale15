@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { getAllPosts, selezionaCategoria } from '../slice/listaPostSlice';
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 export default function SottoNavbar() {
   const dispatch = useDispatch();
   const categorie = useSelector(state => state.chiamataCategorie.categorie);
   const categoriaSelezionata = useSelector(state => state.chiamataPosts.posts.categoriaSelezionata);
+  const loading = useSelector(state => state.chiamataCategorie.loading);
 
   useEffect(() => {
     dispatch(getCategorie());
@@ -22,28 +24,31 @@ export default function SottoNavbar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-          <ToggleButton
-            className='py-1 px-2 mx-1'
-            checked={!categoriaSelezionata}
-            type="checkbox"
-            variant={'outline-success'}
-            onClick={() => { dispatch(getAllPosts()); dispatch(selezionaCategoria(null)); }}
-          >
-            Qualsiasi
-          </ToggleButton>
-          {categorie.map(categoria =>
+          {loading ?
+            <Spinner animation="border" className='mx-auto my-5' role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner> : <>
             <ToggleButton
-              key={categoria.id}
               className='py-1 px-2 mx-1'
-              value={categoria.id}
-              checked={categoria.id === categoriaSelezionata}
+              checked={!categoriaSelezionata}
               type="checkbox"
               variant={'outline-success'}
-              onClick={() => { dispatch(getAllPosts(categoria.id)); dispatch(selezionaCategoria(categoria.id)); }}
+              onClick={() => { dispatch(getAllPosts()); dispatch(selezionaCategoria(null)); }}
             >
-              {categoria.name} <small>({categoria.count})</small>
-            </ToggleButton>)}
-
+              Qualsiasi
+            </ToggleButton>
+          {categorie.map(categoria =>
+              <ToggleButton
+                key={categoria.id}
+                className='py-1 px-2 mx-1'
+                value={categoria.id}
+                checked={categoria.id === categoriaSelezionata}
+                type="checkbox"
+                variant={'outline-success'}
+                onClick={() => { dispatch(getAllPosts(categoria.id)); dispatch(selezionaCategoria(categoria.id)); }}
+              >
+                {categoria.name} <small>({categoria.count})</small>
+              </ToggleButton>)} </>}
         </Nav>
       </Navbar.Collapse>
     </Navbar>
