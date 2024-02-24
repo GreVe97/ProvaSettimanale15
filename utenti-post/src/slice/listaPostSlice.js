@@ -14,12 +14,18 @@ const initialState = {
         paginaCorrente:1,
     },  
 };
-export const getAllPosts = createAsyncThunk("getAllPosts/fetch", async (args=[null,1]) => {
+export const getAllPosts = createAsyncThunk("getAllPosts/fetch", async (args=[null,1], { dispatch }) => {
     console.log("id categoria" ,args[0]);
     console.log("pagina",args[1]);
     console.log("get all post!!");
         return axios(url + postUrl + (args[0] ? (`&categories=`+args[0]):"")+(args[1] ? ("&page="+args[1]):""))
         .then(response => { 
+            if (args[1]) {
+               dispatch(setPaginaCorrentePosts(args[1])); 
+            }else{
+                dispatch(setPaginaCorrentePosts(1));
+            }
+            
             console.log(response.headers["x-wp-totalpages"]);
             return [response.data,response.headers["x-wp-totalpages"]] 
         })

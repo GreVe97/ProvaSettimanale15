@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { UseDispatch } from "react-redux";
-import { getAllPosts, setPaginaCorrentePosts } from "../../slice/listaPostSlice";
+import { getAllPosts } from "../../slice/listaPostSlice";
 
 export default function ComponentePaginazioneHome() {
 
@@ -14,17 +14,12 @@ export default function ComponentePaginazioneHome() {
   const categoriaSelezionata = useSelector(state => state.chiamataPosts.posts.categoriaSelezionata);
   const loading = useSelector(state => state.chiamataPosts.posts.loading);
 
-  useEffect(() => {
-    if (loading) {
-      dispatch(setPaginaCorrentePosts(1));
-    };
    
-  }, [categoriaSelezionata]);
+
 
   const mostraPagine = 5;
   const handlePageClick = (pagina) => {
     window.scrollTo(0, 0);
-    dispatch(setPaginaCorrentePosts(pagina));
     dispatch(getAllPosts([categoriaSelezionata,pagina]));
   };
 

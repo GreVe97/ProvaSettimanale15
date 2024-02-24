@@ -43,7 +43,7 @@ export default function MettiArticolo() {
                         type="checkbox"
                         variant={'outline-success'}
                         onClick={() => {
-                            dispatch(getAllPosts(categoria));
+                            dispatch(getAllPosts([categoria.id]));
                             dispatch(selezionaCategoria(categoria.id));
                         }}
                     >
