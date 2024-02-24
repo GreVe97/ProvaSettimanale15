@@ -9,14 +9,19 @@ const initialState = {
         error: "",
         successo: false,
         postSelezionato:{},
-        categoriaSelezionata : null,
-    },
+        categoriaSelezionata : null,  
+        pagineTotali:1,
+        paginaCorrente:1,
+    },  
 };
-export const getAllPosts = createAsyncThunk("getAllPosts/fetch", async (categoria=null) => {
+export const getAllPosts = createAsyncThunk("getAllPosts/fetch", async (args=[null,1]) => {
+    console.log("id categoria" ,args[0]);
+    console.log("pagina",args[1]);
     console.log("get all post!!");
-        return axios(url + postUrl + (categoria ? (`&categories=`+categoria):"") )
-        .then(async (response) => { 
-            return response.data 
+        return axios(url + postUrl + (args[0] ? (`&categories=`+args[0]):"")+(args[1] ? ("&page="+args[1]):""))
+        .then(response => { 
+            console.log(response.headers["x-wp-totalpages"]);
+            return [response.data,response.headers["x-wp-totalpages"]] 
         })
 });
 
@@ -31,6 +36,9 @@ const chiamataPosts_slice = createSlice(
             selezionaPost: create.reducer((state, action) => {
                 state.posts.postSelezionato=action.payload;
               }),
+              setPaginaCorrentePosts: create.reducer((state, action) => {
+                state.posts.paginaCorrente=action.payload;
+              }),
           }),
         extraReducers: builder => {
             builder.addCase(getAllPosts.pending, (state, action) => {
@@ -44,13 +52,13 @@ const chiamataPosts_slice = createSlice(
                 })
                 .addCase(getAllPosts.fulfilled, (state, action) => {
                     state.posts.loading = false;
-                    state.posts.listaPost = action.payload;                
-                    state.posts.successo = true;
-                   
+                    state.posts.listaPost = action.payload[0];                
+                    state.posts.successo = true;  
+                    state.posts.pagineTotali =  action.payload[1];                 
                 })
         }
     }
 )
 const { reducer, actions } = chiamataPosts_slice;
-export const {selezionaCategoria, selezionaPost} = actions;
+export const {selezionaCategoria, selezionaPost, setPaginaCorrentePosts} = actions;
 export default reducer;

@@ -12,7 +12,7 @@ const initialState = {
 
 export const getCategorie = createAsyncThunk("GetCategorie/fetch", async () => {
     return axios(url + tutteCategorieUrl)
-        .then((response) => {
+        .then(response => {
             console.log(response);
             return response.data })
 

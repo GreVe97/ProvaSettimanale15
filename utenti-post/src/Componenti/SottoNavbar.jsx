@@ -15,7 +15,9 @@ export default function SottoNavbar() {
   const loading = useSelector(state => state.chiamataCategorie.loading);
 
   useEffect(() => {
-    dispatch(getCategorie());
+    if (categorie.length === 0) {
+      dispatch(getCategorie());
+    }
   }, []);
 
   return (
@@ -25,30 +27,30 @@ export default function SottoNavbar() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           {loading ?
-            <Spinner animation="border" className='mx-auto my-5' role="status">
+            <Spinner animation="border ms-5" className='mx-auto my-5' role="status">
               <span className="visually-hidden">Loading...</span>
             </Spinner> : <>
-            <ToggleButton
-              className='py-1 px-2 mx-1'
-              checked={!categoriaSelezionata}
-              type="checkbox"
-              variant={'outline-success'}
-              onClick={() => { dispatch(getAllPosts()); dispatch(selezionaCategoria(null)); }}
-            >
-              Qualsiasi
-            </ToggleButton>
-          {categorie.map(categoria =>
               <ToggleButton
-                key={categoria.id}
                 className='py-1 px-2 mx-1'
-                value={categoria.id}
-                checked={categoria.id === categoriaSelezionata}
+                checked={!categoriaSelezionata}
                 type="checkbox"
                 variant={'outline-success'}
-                onClick={() => { dispatch(getAllPosts(categoria.id)); dispatch(selezionaCategoria(categoria.id)); }}
+                onClick={() => { dispatch(getAllPosts()); dispatch(selezionaCategoria(null)); }}
               >
-                {categoria.name} <small>({categoria.count})</small>
-              </ToggleButton>)} </>}
+                Qualsiasi
+              </ToggleButton>
+              {categorie.map(categoria =>
+                <ToggleButton
+                  key={categoria.id}
+                  className='py-1 px-2 mx-1'
+                  value={categoria.id}
+                  checked={categoria.id === categoriaSelezionata}
+                  type="checkbox"
+                  variant={'outline-success'}
+                  onClick={() => { dispatch(getAllPosts([categoria.id])); dispatch(selezionaCategoria(categoria.id)); }}
+                >
+                  {categoria.name} <small>({categoria.count})</small>
+                </ToggleButton>)} </>}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

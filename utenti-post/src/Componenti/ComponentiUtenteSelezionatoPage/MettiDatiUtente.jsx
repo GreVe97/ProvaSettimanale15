@@ -12,9 +12,15 @@ export default function MettiDatiUtente() {
     const utente = useSelector(state=>state.utenteSelezionato.utente);
     const postUtente = useSelector(state => state.utenteSelezionato.postsUtente);
     const loading =useSelector(state => state.utenteSelezionato.loading);
+    console.log(utente);
   return (
     <Container>
-        <CardAutore autore = {utente}/>
+      {Object.keys(utente).length === 0 ? (
+                <Spinner animation="border" className='mx-auto my-5' role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            ) :<CardAutore autore = {utente}/>}
+        
 
         <h3>Lista Post:</h3>
         <Row xs={1} md={2} className="g-4 my-2" >

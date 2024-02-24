@@ -4,7 +4,7 @@ import chiamataUtentiReducer from '../slice/listaUtentiSlice';
 import chiamataPostsReducer from '../slice/listaPostSlice';
 import chiamataCategorieReducer from '../slice/listaCategorieSlice';
 import utenteSelezionatoReducer from "../slice/utenteSelezionatoSlice";
-import sessionStorage from "redux-persist/lib/storage/session";
+import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer, FLUSH,
     REHYDRATE,
     PAUSE,
@@ -15,7 +15,7 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 
 const rootPersistConfig = {
     key: "root",
-    storage: sessionStorage,
+    storage,
     transforms: [
       encryptTransform({
         secretKey: "my-super-secret-key",
@@ -24,7 +24,6 @@ const rootPersistConfig = {
         },
       }),
     ],
-    whitelist: ['chiamataPosts','utenteSelezionato'],
   };
 
   const rootReducer = combineReducers({

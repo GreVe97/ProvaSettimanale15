@@ -16,7 +16,7 @@ export default function CardArticolo({ post }) {
     let [immagine, setImmagine] = useState("https://southeastlandconsultants.com/wp-content/themes/u-design/assets/images/placeholders/post-placeholder.jpg");
     let [categorie, setCategorie] = useState([]);
 
-    useState(() => {
+    useEffect(() => {
         setCategorie([]);
         if (posts.length > 0) {
             if (post.featured_media !=0 ){
@@ -57,7 +57,7 @@ export default function CardArticolo({ post }) {
                             variant="secondary" 
                             className='p-1 mx-1'
                             onClick={()=> {
-                                dispatch(getAllPosts(categoria.id)); 
+                                dispatch(getAllPosts([categoria.id])); 
                                 dispatch(selezionaCategoria(categoria.id));
                                 navigate("/")}}>
                                 {categoria.name} {/* <small className=''>({categoria.count})</small> */}

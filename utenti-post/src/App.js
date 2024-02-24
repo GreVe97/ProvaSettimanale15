@@ -8,10 +8,12 @@ import NotFoundPage from './Pagine/NotFoundPage';
 import NavbarBella from './Componenti/NavbarBella';
 import ArticoloPage from './Pagine/ArticoloPage'
 import UtentePage from './Pagine/UtentePage';
+import Scrollata from './Componenti/Scrollata';
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter scrollToTop={true}>
     <NavbarBella/>
+    <Scrollata/>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/utenti/" element={<ListaUtentiPage />} />

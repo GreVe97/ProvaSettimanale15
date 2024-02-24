@@ -17,7 +17,16 @@ export default function MettiArticolo() {
     const dispatch = useDispatch();
     const [{ id }, setId] = useState(useParams());
     const articolo = useSelector(state => state.chiamataPosts.posts.postSelezionato);
+    const loadingPosts = useSelector(state => state.chiamataPosts.posts.loading);
+
     console.log(articolo);
+
+    useEffect(() => {
+        if (loadingPosts) {
+            navigate("/");
+        }
+
+    }, [loadingPosts])
     return (
         <Container className='my-3'>
             <h1 className='my-3' dangerouslySetInnerHTML={{ __html: articolo.title.rendered }} ></h1>
@@ -26,17 +35,21 @@ export default function MettiArticolo() {
             </div>
             <div className='my-3'>
                 <span className='me-2 h6'>Categories:</span>
-                {articolo.categorie.map(categoria=>  
-                <Button 
-              key={categoria.id}
-              className='py-1 px-2 mx-1'
-              value={categoria.id}
-              type="checkbox"
-              variant={'outline-success'}
-              onClick={() => { dispatch(getAllPosts(categoria.id)); dispatch(selezionaCategoria(categoria.id)); navigate("/")}}
-            >
-              {categoria.name}
-            </Button>)}
+                {articolo.categorie.map(categoria => 
+                    <Button
+                        key={categoria.id}
+                        className='py-1 px-2 mx-1'
+                        value={categoria.id}
+                        type="checkbox"
+                        variant={'outline-success'}
+                        onClick={() => {
+                            dispatch(getAllPosts(categoria));
+                            dispatch(selezionaCategoria(categoria.id));
+                        }}
+                    >
+                        {categoria.name}
+                    </Button>
+                )}
             </div>
             <Container className='articolo my-4' dangerouslySetInnerHTML={{ __html: articolo.content.rendered }}>
             </Container>

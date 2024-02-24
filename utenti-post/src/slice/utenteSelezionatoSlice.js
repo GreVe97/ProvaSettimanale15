@@ -9,9 +9,9 @@ const initialState = {
     error: "",   
 };
 export const getUtentePosts = createAsyncThunk("getUtentePosts/fetch", async (id) => {
-    console.log("get all post!!");
+    console.log("get utente post!!");
         return axios(url + postUrl +"&author="+id)
-        .then(async (response) => { 
+        .then(response => { 
             return response.data 
         })
 });
@@ -22,6 +22,7 @@ const utenteSelezionato_slice = createSlice(
         initialState: initialState,
         reducers: (create) => ({
             selezionaUtente: create.reducer((state, action) => {
+                console.log("Sseleziona Utente!!!");
               state.utente=action.payload;
             }),
           }),
