@@ -12,8 +12,8 @@ const initialState = {
     paginaCorrente:1,
 };
 
-export const getUtenti = createAsyncThunk("GetUtenti/fetch", async (args=[1]) => {
-    return axios(url + utentiUrl +"&page="+args[0])
+export const getUtenti = createAsyncThunk("GetUtenti/fetch", async (args=[1,""]) => {
+    return axios(url + utentiUrl +"&page="+args[0]+(args[1] ? ("&search="+args[1]):""))
         .then(response =>  [response.data,response.headers["x-wp-totalpages"]] )
 
 })

@@ -44,7 +44,7 @@ export default function SottoNavbar() {
                   key={categoria.id}
                   className='py-1 px-2 mx-1'
                   value={categoria.id}
-                  checked={categoria.id === categoriaSelezionata}
+                  checked={categoria.id == categoriaSelezionata}
                   type="checkbox"
                   variant={'outline-success'}
                   onClick={() => { dispatch(getAllPosts([categoria.id])); dispatch(selezionaCategoria(categoria.id)); }}
